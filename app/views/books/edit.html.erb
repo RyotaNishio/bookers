@@ -1,10 +1,33 @@
-<h1>編集画面</h1>
-  <%= form_with model:@book, local:true do |f| %>
-    <h4>タイトル</h4>
+<h1>Editing Book</h1>
+<% if @book.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= @book.errors.count %> errors prohibited this book from being saved:
+    </h2>
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with model:@book, url:update_book_path(@book.id), method: :patch, local:true do |f| %>
+  <div class="field">
+    <%= f.label :title, "Title" %>
     <%= f.text_field :title %>
-    
-    <h4>感想</h4>
+  </div>
+
+  <div class="field">
+    <%= f.label :body %>
     <%= f.text_area :body %>
-    
-    <%= f.submit '編集' %>
-  <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Update Book' %>
+  </div>
+<% end %>
+
+
+<%= link_to "Show", book_path(@book.id) %>
+ |
+<%= link_to "Back", books_path %>
